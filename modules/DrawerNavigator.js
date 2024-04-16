@@ -10,8 +10,14 @@ export default function DrawerNavigator() {
   return (
     <SafeAreaView style={styles.container}>
       <Drawer.Navigator>
-        <Drawer.Screen name="Home" component={Home} />
-        <Drawer.Screen name="Profile" component={Profile} />
+        <Drawer.Screen name="Home" 
+        component={Home} 
+        options={{ title: 'Inicio' }}
+        />
+        <Drawer.Screen name="Profile" 
+        component={Profile} 
+        options={{ title: 'Perfil' }}
+        />
       </Drawer.Navigator>
     </SafeAreaView>
   );
