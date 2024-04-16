@@ -1,11 +1,13 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, View, Text } from 'react-native';
 
-export default function Profile() {
+export default function Profile({ route }) {
+  const { usuario } = route.params;
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <Text>Bienvenido Perfil</Text>
+        <Text>Bienvenido {usuario} a tu perfil</Text>
       </View>
     </SafeAreaView>
   );

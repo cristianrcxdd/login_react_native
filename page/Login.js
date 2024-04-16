@@ -16,9 +16,12 @@ export default function Login() {
       });
 
       if (response.data.success) {
-        navigation.navigate('Drawer');
-      } else {
-        Alert.alert('Error', response.data.message);
+        navigation.navigate('Drawer', {
+          screen: 'Profile',
+          params: { usuario: response.data.usuario }
+        });
+    } else {
+        Alert.alert('Error', 'Datos incorrectos⚠️');
       }
       
     } catch (error) {
