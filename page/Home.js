@@ -14,13 +14,13 @@ export default function Home() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FFFFFF', // Color de fondo blanco
+    backgroundColor: '#FFFFFF',
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#FFFFFF', // Color de fondo blanco
+    backgroundColor: '#FFFFFF',
   },
 });

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function Login() {
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
+  const [loading, setLoading] = useState(false); 
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -25,8 +26,10 @@ export default function Login() {
   };
 
   const handleLogin = async () => {
+    setLoading(true);
+
     try {
-      const response = await axios.post('http://10.40.0.218/estudio/backend/login.php', {
+      const response = await axios.post('https://urbacarsrl.org/yop/backend/login.php', {
         usuario,
         contrasena,
       });
@@ -40,6 +43,8 @@ export default function Login() {
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       Alert.alert('Error', 'Hubo un error al intentar iniciar sesión');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,8 +63,16 @@ export default function Login() {
         onChangeText={setContrasena}
         secureTextEntry
       />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Iniciar sesión</Text>
+      <TouchableOpacity 
+        style={[styles.button, loading ? styles.buttonDisabled : null]} 
+        onPress={handleLogin} 
+        disabled={loading}
+      >
+        {loading ? (
+          <ActivityIndicator size="small" color="#007bff" /> 
+        ) : (
+          <Text style={styles.buttonText}>Iniciar sesión</Text>
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -71,7 +84,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#FFFFFF', // Color de fondo blanco
+    backgroundColor: '#FFFFFF', 
   },
   input: {
     width: '100%',
@@ -81,17 +94,20 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     marginBottom: 20,
     borderRadius: 5,
-    color: '#000000', // Color de texto negro
+    color: '#000000', 
   },
   button: {
-    backgroundColor: '#007bff', // Color azul
+    backgroundColor: '#007bff', 
     padding: 15,
     borderRadius: 5,
     width: '100%',
     alignItems: 'center',
   },
+  buttonDisabled: {
+    backgroundColor: '#a6c8ff', 
+  },
   buttonText: {
-    color: '#FFFFFF', // Color de texto blanco
+    color: '#FFFFFF', 
     fontSize: 18,
   },
 });
