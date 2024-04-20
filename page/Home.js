@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Importa el icono que necesites
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Home({ navigation }) {
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: 'Inicio', 
+      headerTitleAlign: 'right', 
+      headerStyle: {
+        backgroundColor: '#cf152d', 
+      },
+      headerTintColor: '#FFFFFF', 
+      headerTitleStyle: {
+        fontWeight: 'bold', 
+      },
+    });
+  }, []);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>

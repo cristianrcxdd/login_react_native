@@ -8,23 +8,17 @@ const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigator() {
   return (
-    
-      <Drawer.Navigator>
-        <Drawer.Screen name="Home" 
+    <Drawer.Navigator>
+      <Drawer.Screen 
+        name="Home" 
         component={Home} 
-        options={{ title: 'Inicio' }}
-        />
-        <Drawer.Screen name="Profile" 
+        options={{ title: 'Inicio' }} 
+      />
+      <Drawer.Screen 
+        name="Profile" 
         component={Profile} 
-        options={{ title: 'Perfil' }}
-        />
-      </Drawer.Navigator>
-   
+        options={{ title: 'Perfil' }} 
+      />
+    </Drawer.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -11,6 +11,20 @@ export default function Profile({ route }) {
     await AsyncStorage.removeItem('usuario');
     navigation.navigate('Login');
   };
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: 'Perfil', 
+      headerTitleAlign: 'right', 
+      headerStyle: {
+        backgroundColor: '#cf152d', 
+      },
+      headerTintColor: '#FFFFFF', 
+      headerTitleStyle: {
+        fontWeight: 'bold', 
+      },
+    });
+  }, []);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -45,7 +59,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   buttonText: {
-    color: '#FFFFFF', // Color de texto blanco
+    color: '#FFFFFF', 
     fontSize: 18,
   },
 });
