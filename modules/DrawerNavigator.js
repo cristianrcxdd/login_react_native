@@ -8,7 +8,7 @@ const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigator() {
   return (
-    <SafeAreaView style={styles.container}>
+    
       <Drawer.Navigator>
         <Drawer.Screen name="Home" 
         component={Home} 
@@ -19,7 +19,7 @@ export default function DrawerNavigator() {
         options={{ title: 'Perfil' }}
         />
       </Drawer.Navigator>
-    </SafeAreaView>
+   
   );
 }
 
