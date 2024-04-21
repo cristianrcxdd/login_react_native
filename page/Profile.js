@@ -41,7 +41,7 @@ export default function Profile({ route }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FFFFFF', 
+    backgroundColor: '#cf152d', 
   },
   container: {
     flex: 1,

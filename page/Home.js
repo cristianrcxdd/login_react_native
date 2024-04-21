@@ -24,7 +24,7 @@ export default function Home({ navigation }) {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.row}>
-          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Eventos')}>
+          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Event')}>
             <Icon name="calendar" size={50} color="#cf152d" />
             <Text style={styles.boxText}>Eventos</Text>
           </TouchableOpacity>
@@ -51,7 +51,7 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#cf152d',
   },
   container: {
     flex: 1,
