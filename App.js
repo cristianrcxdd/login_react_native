@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import DrawerNavigator from './modules/DrawerNavigator';
 import Login from './page/Login';
-import Event from './page/Event'; // Importa la pantalla de Event
+import Event from './page/Event';
 import { BackHandler, Alert } from 'react-native';
 
 const Stack = createStackNavigator();
