@@ -27,15 +27,16 @@ export default function Login() {
 
   const handleLogin = async () => {
     setLoading(true);
-
+  
     try {
-      const response = await axios.post('https://urbacarsrl.org/yop/backend/login.php', {
+      const response = await axios.post('http://192.168.0.11/backend/login.php', {
         usuario,
         contrasena,
       });
-
+  
       if (response.data.success) {
         await AsyncStorage.setItem('usuario', usuario);
+        await AsyncStorage.setItem('nombre_completo', response.data.nombre_completo);
         navigation.navigate('Drawer', { screen: 'Profile', params: { usuario } });
       } else {
         Alert.alert('Error', 'Datos incorrectos');
@@ -52,13 +53,13 @@ export default function Login() {
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Usuario"
+        placeholder="Nro. de Agenda"
         value={usuario}
         onChangeText={setUsuario}
       />
       <TextInput
         style={styles.input}
-        placeholder="Contraseña"
+        placeholder="Nro. de CI"
         value={contrasena}
         onChangeText={setContrasena}
         secureTextEntry
@@ -69,7 +70,7 @@ export default function Login() {
         disabled={loading}
       >
         {loading ? (
-          <ActivityIndicator size="small" color="#007bff" /> 
+          <ActivityIndicator size="small" color="#FFFFFF" /> 
         ) : (
           <Text style={styles.buttonText}>Iniciar sesión</Text>
         )}
@@ -97,17 +98,18 @@ const styles = StyleSheet.create({
     color: '#000000', 
   },
   button: {
-    backgroundColor: '#007bff', 
+    backgroundColor: '#cf152d', 
     padding: 15,
     borderRadius: 5,
     width: '100%',
     alignItems: 'center',
   },
   buttonDisabled: {
-    backgroundColor: '#a6c8ff', 
+    backgroundColor: '#f6a4af', 
   },
   buttonText: {
     color: '#FFFFFF', 
     fontSize: 18,
+    fontWeight: 'bold',
   },
 });
