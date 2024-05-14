@@ -10,6 +10,7 @@ import {
   Platform, 
   StatusBar,
   Linking,
+  ActivityIndicator, // Importa ActivityIndicator
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
@@ -65,7 +66,6 @@ const Event = () => {
           <Text style={styles.headerTitle}>Eventos</Text>
         </View>
 
-        {/* Descargar Cronograma Button */}
         <TouchableOpacity 
           style={[styles.downloadButton, isLoading ? styles.disabledDateButton : null]}  
           onPress={() => {
@@ -79,7 +79,6 @@ const Event = () => {
           <Text style={styles.dateButtonText}>Descargar Cronograma</Text>
         </TouchableOpacity>
 
-        {/* Date Buttons */}
         <View style={styles.dateButtons}>
           {['2024-06-01', '2024-06-02', '2024-06-03', '2024-06-04'].map((date) => (
             <TouchableOpacity 
@@ -102,18 +101,18 @@ const Event = () => {
           <Text style={styles.selectedDateText}>Eventos del {selectedDate}</Text>
         )}
 
-        {isLoading && (
+        {isLoading ? (
           <View style={styles.loadingContainer}>
-            <Text>Cargando...</Text>
+            <ActivityIndicator size="large" color="#cf152d" />
           </View>
+        ) : (
+          <FlatList
+            data={events}
+            renderItem={renderItem}
+            keyExtractor={item => item.id.toString()}
+            contentContainerStyle={styles.listContent}
+          />
         )}
-
-        <FlatList
-          data={events}
-          renderItem={renderItem}
-          keyExtractor={item => item.id.toString()}
-          contentContainerStyle={styles.listContent}
-        />
       </View>
     </SafeAreaView>
   );
@@ -204,9 +203,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   loadingContainer: {
-    alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
-    marginBottom: 20,
+    alignItems: 'center',
+    backgroundColor: '#f2f2f2',
   },
 });
 
