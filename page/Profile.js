@@ -3,6 +3,7 @@ import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Image } from 'r
 import { Ionicons } from '@expo/vector-icons'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import * as WebBrowser from 'expo-web-browser';
 
 export default function Profile({ route }) {
   const [nombreCompleto, setNombreCompleto] = useState('');
@@ -43,16 +44,29 @@ export default function Profile({ route }) {
       console.error('Error al obtener los certificados:', error);
     }
   };
+
+  const handleCertificadoClick = async (nro_certificado) => {
+    try {
+      const usuario = await AsyncStorage.getItem('usuario');
+      const url = `http://192.168.0.7/estudio/backend/download_certificado.php?usuario=${usuario}&nro_certificado=${nro_certificado}`;
+      await WebBrowser.openBrowserAsync(url);
+    } catch (error) {
+      console.error('Error al descargar el certificado:', error);
+    }
+  };
+
   const renderCertificados = () => {
     if (!certificados || certificados.length === 0) {
       return <Text style={styles.noCertificadosText}>Sin certificados registrados</Text>;
     }
-  
+
     return certificados.map((certificado, index) => (
-      <View key={index} style={styles.certificadoContainer}>
-        <Image source={require('../images/pdf_download.png')} style={styles.certificadoImage} />
-        <Text style={styles.gestionText}>{certificado.gestion}</Text>
-      </View>
+      <TouchableOpacity key={index} onPress={() => handleCertificadoClick(certificado.nro_certificado)}>
+        <View style={styles.certificadoContainer}>
+          <Image source={require('../images/pdf_download.png')} style={styles.certificadoImage} />
+          <Text style={styles.gestionText}>{certificado.gestion}</Text>
+        </View>
+      </TouchableOpacity>
     ));
   };
 
@@ -161,5 +175,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  noCertificadosText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 20,
   },
 });
