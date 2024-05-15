@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Profile({ route }) {
   const [nombreCompleto, setNombreCompleto] = useState('');
+  const [certificados, setCertificados] = useState([]);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -19,7 +20,41 @@ export default function Profile({ route }) {
     };
 
     obtenerNombreCompleto();
+    obtenerCertificados();
   }, []);
+
+  const obtenerCertificados = async () => {
+    try {
+      const usuario = await AsyncStorage.getItem('usuario');
+      const response = await fetch('http://192.168.0.7/estudio/backend/get_certificado.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ usuario }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setCertificados(data.certificados);
+      } else {
+        console.error('Error al obtener los certificados:', data.message);
+      }
+    } catch (error) {
+      console.error('Error al obtener los certificados:', error);
+    }
+  };
+  const renderCertificados = () => {
+    if (!certificados || certificados.length === 0) {
+      return <Text style={styles.noCertificadosText}>Sin certificados registrados</Text>;
+    }
+  
+    return certificados.map((certificado, index) => (
+      <View key={index} style={styles.certificadoContainer}>
+        <Image source={require('../images/pdf_download.png')} style={styles.certificadoImage} />
+        <Text style={styles.gestionText}>{certificado.gestion}</Text>
+      </View>
+    ));
+  };
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem('nombre_completo');
@@ -52,6 +87,9 @@ export default function Profile({ route }) {
           <Text style={styles.buttonText}>Cerrar sesión</Text>
         </TouchableOpacity>
         <Text style={styles.sectionText}>Sección de Certificados</Text>
+        <View style={styles.certificadosContainer}>
+          {renderCertificados()}
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -102,5 +140,26 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 20,
     fontSize: 20,
+  },
+  certificadosContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  certificadoContainer: {
+    alignItems: 'center',
+    marginHorizontal: 10,
+    marginBottom: 20,
+  },
+  certificadoImage: {
+    width: 100,
+    height: 100,
+    marginBottom: 10,
+  },
+  gestionText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
