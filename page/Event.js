@@ -10,7 +10,7 @@ import {
   Platform, 
   StatusBar,
   Linking,
-  ActivityIndicator, // Importa ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
