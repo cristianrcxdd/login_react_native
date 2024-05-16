@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Image, FlatList, RefreshControl } from 'react-native';
+import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Image, FlatList, RefreshControl, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -9,13 +9,14 @@ export default function Profile({ route }) {
   const [nombreCompleto, setNombreCompleto] = useState('');
   const [certificados, setCertificados] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [noCertificados, setNoCertificados] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
     const obtenerNombreCompleto = async () => {
       try {
         const nombre = await AsyncStorage.getItem('nombre_completo');
-        setNombreCompleto(nombre);
+        setNombreCompleto(nombre || '');
       } catch (error) {
         console.error('Error al obtener el nombre completo:', error);
       }
@@ -28,7 +29,7 @@ export default function Profile({ route }) {
   const obtenerCertificados = async () => {
     try {
       const usuario = await AsyncStorage.getItem('usuario');
-      const response = await fetch('http://10.40.1.123/estudio/backend/get_certificado.php', {
+      const response = await fetch('http://10.40.1.43/estudio/backend/get_certificado.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,19 +38,25 @@ export default function Profile({ route }) {
       });
       const data = await response.json();
       if (data.success) {
-        setCertificados(data.certificados);
+        const certificados = data.certificados || [];
+        setCertificados(certificados);
+        setNoCertificados(certificados.length === 0);
       } else {
         console.error('Error al obtener los certificados:', data.message);
+        setCertificados([]);
+        setNoCertificados(true);
       }
     } catch (error) {
       console.error('Error al obtener los certificados:', error);
+      setCertificados([]);
+      setNoCertificados(true);
     }
   };
 
   const handleCertificadoClick = async (nro_certificado) => {
     try {
       const usuario = await AsyncStorage.getItem('usuario');
-      const url = `http://10.40.1.123/estudio/backend/download_certificado.php?usuario=${usuario}&nro_certificado=${nro_certificado}`;
+      const url = `http://10.40.1.43/estudio/backend/download_certificado.php?usuario=${usuario}&nro_certificado=${nro_certificado}`;
       await WebBrowser.openBrowserAsync(url);
     } catch (error) {
       console.error('Error al descargar el certificado:', error);
@@ -102,16 +109,25 @@ export default function Profile({ route }) {
           <Text style={styles.buttonText}>Cerrar sesión</Text>
         </TouchableOpacity>
         <Text style={styles.sectionText}>Sección de Certificados</Text>
-        <FlatList
-          data={certificados}
-          renderItem={renderCertificado}
-          keyExtractor={(item, index) => index.toString()}
-          numColumns={2}
-          contentContainerStyle={styles.certificadosContainer}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        />
+        {noCertificados ? (
+          <ScrollView
+            contentContainerStyle={styles.scrollViewContent}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+          >
+            <Text style={styles.noCertificadosText}>Sin registro de certificados</Text>
+          </ScrollView>
+        ) : (
+          <FlatList
+            data={certificados}
+            renderItem={renderCertificado}
+            keyExtractor={(item, index) => index.toString()}
+            numColumns={2}
+            contentContainerStyle={styles.certificadosContainer}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -187,5 +203,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 20,
+  },
+  scrollViewContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

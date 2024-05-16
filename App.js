@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import DrawerNavigator from './modules/DrawerNavigator';
 import Login from './page/Login';
 import Event from './page/Event';
+import Support from './page/Support'; 
 import { BackHandler, Alert } from 'react-native';
 
 const Stack = createStackNavigator();
@@ -55,6 +56,10 @@ export default function App() {
         <Stack.Screen 
           name="Event" 
           component={Event} 
+        />
+        <Stack.Screen 
+          name="Support" 
+          component={Support}
         />
       </Stack.Navigator>
     </NavigationContainer>

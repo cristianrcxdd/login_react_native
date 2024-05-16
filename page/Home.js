@@ -18,7 +18,7 @@ export default function Home({ navigation }) {
         fontWeight: 'bold', 
       },
     });
-  }, []);
+  }, [navigation]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -38,7 +38,7 @@ export default function Home({ navigation }) {
             <Icon name="question-circle" size={50} color="#cf152d" />
             <Text style={styles.boxText}>Preguntas Frecuentes</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Soporte')}>
+          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Support')}>
             <Icon name="life-ring" size={50} color="#cf152d" />
             <Text style={styles.boxText}>Soporte</Text>
           </TouchableOpacity>
