@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Image, FlatList, RefreshControl } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import * as WebBrowser from 'expo-web-browser';
 export default function Profile({ route }) {
   const [nombreCompleto, setNombreCompleto] = useState('');
   const [certificados, setCertificados] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function Profile({ route }) {
   const obtenerCertificados = async () => {
     try {
       const usuario = await AsyncStorage.getItem('usuario');
-      const response = await fetch('http://192.168.0.7/estudio/backend/get_certificado.php', {
+      const response = await fetch('http://10.40.1.123/estudio/backend/get_certificado.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,31 +49,31 @@ export default function Profile({ route }) {
   const handleCertificadoClick = async (nro_certificado) => {
     try {
       const usuario = await AsyncStorage.getItem('usuario');
-      const url = `http://192.168.0.7/estudio/backend/download_certificado.php?usuario=${usuario}&nro_certificado=${nro_certificado}`;
+      const url = `http://10.40.1.123/estudio/backend/download_certificado.php?usuario=${usuario}&nro_certificado=${nro_certificado}`;
       await WebBrowser.openBrowserAsync(url);
     } catch (error) {
       console.error('Error al descargar el certificado:', error);
     }
   };
 
-  const renderCertificados = () => {
-    if (!certificados || certificados.length === 0) {
-      return <Text style={styles.noCertificadosText}>Sin certificados registrados</Text>;
-    }
-
-    return certificados.map((certificado, index) => (
-      <TouchableOpacity key={index} onPress={() => handleCertificadoClick(certificado.nro_certificado)}>
-        <View style={styles.certificadoContainer}>
-          <Image source={require('../images/pdf_download.png')} style={styles.certificadoImage} />
-          <Text style={styles.gestionText}>{certificado.gestion}</Text>
-        </View>
-      </TouchableOpacity>
-    ));
-  };
+  const renderCertificado = ({ item }) => (
+    <TouchableOpacity onPress={() => handleCertificadoClick(item.nro_certificado)}>
+      <View style={styles.certificadoContainer}>
+        <Image source={require('../images/pdf_download.png')} style={styles.certificadoImage} />
+        <Text style={styles.gestionText}>{item.gestion}</Text>
+      </View>
+    </TouchableOpacity>
+  );
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem('nombre_completo');
     navigation.navigate('Login');
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await obtenerCertificados();
+    setRefreshing(false);
   };
 
   useEffect(() => {
@@ -101,9 +102,16 @@ export default function Profile({ route }) {
           <Text style={styles.buttonText}>Cerrar sesión</Text>
         </TouchableOpacity>
         <Text style={styles.sectionText}>Sección de Certificados</Text>
-        <View style={styles.certificadosContainer}>
-          {renderCertificados()}
-        </View>
+        <FlatList
+          data={certificados}
+          renderItem={renderCertificado}
+          keyExtractor={(item, index) => index.toString()}
+          numColumns={2}
+          contentContainerStyle={styles.certificadosContainer}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        />
       </View>
     </SafeAreaView>
   );
@@ -156,15 +164,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   certificadosContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     justifyContent: 'center',
     marginTop: 10,
   },
   certificadoContainer: {
+    flex: 1,
     alignItems: 'center',
-    marginHorizontal: 10,
-    marginBottom: 20,
+    margin: 10,
   },
   certificadoImage: {
     width: 100,

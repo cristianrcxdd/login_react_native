@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
 
 export default function DrawerNavigator() {
   return (
-    <SafeAreaView style={styles.drawerContainer}>
       <Drawer.Navigator
         screenOptions={{
           drawerStyle: styles.drawerContent,
@@ -42,6 +41,5 @@ export default function DrawerNavigator() {
           options={{ title: 'Perfil' }} 
         />
       </Drawer.Navigator>
-    </SafeAreaView>
   );
 }

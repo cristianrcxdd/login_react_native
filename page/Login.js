@@ -29,7 +29,7 @@ export default function Login() {
     setLoading(true);
   
     try {
-      const response = await axios.post('http://192.168.0.7/estudio/backend/login.php', {
+      const response = await axios.post('http://10.40.1.123/estudio/backend/login.php', {
         usuario,
         contrasena,
       });
