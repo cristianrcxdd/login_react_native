@@ -29,7 +29,7 @@ export default function Profile({ route }) {
   const obtenerCertificados = async () => {
     try {
       const usuario = await AsyncStorage.getItem('usuario');
-      const response = await fetch('http://10.40.1.43/estudio/backend/get_certificado.php', {
+      const response = await fetch('https://urbacarsrl.org/yop/backend/get_certificado.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export default function Profile({ route }) {
   const handleCertificadoClick = async (nro_certificado) => {
     try {
       const usuario = await AsyncStorage.getItem('usuario');
-      const url = `http://10.40.1.43/estudio/backend/download_certificado.php?usuario=${usuario}&nro_certificado=${nro_certificado}`;
+      const url = `https://urbacarsrl.org/yop/backend/download_certificado.php?usuario=${usuario}&nro_certificado=${nro_certificado}`;
       await WebBrowser.openBrowserAsync(url);
     } catch (error) {
       console.error('Error al descargar el certificado:', error);

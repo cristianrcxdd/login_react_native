@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Dimensions, Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 
@@ -20,6 +20,10 @@ export default function Home({ navigation }) {
     });
   }, [navigation]);
 
+  const openWebLink = () => {
+    Linking.openURL('https://www.utepsa.edu/jets/');
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -31,6 +35,16 @@ export default function Home({ navigation }) {
           <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Expositores')}>
             <Icon name="users" size={50} color="#cf152d" />
             <Text style={styles.boxText}>Expositores</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.row}>
+          <TouchableOpacity style={styles.box} onPress={openWebLink}>
+            <Icon name="globe" size={50} color="#cf152d" />
+            <Text style={styles.boxText}>Visitar Pagina Web</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('inscripciones')}>
+            <Icon name="map-marker" size={50} color="#cf152d" />
+            <Text style={styles.boxText}>Puntos de inscripción</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.row}>
