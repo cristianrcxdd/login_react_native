@@ -11,6 +11,7 @@ import {
   StatusBar,
   Linking,
   ActivityIndicator,
+  RefreshControl, 
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
@@ -19,12 +20,13 @@ const screenWidth = Dimensions.get('window').width;
 
 const Event = () => {
   const navigation = useNavigation();
-  const [selectedDate, setSelectedDate] = useState('2024-06-01'); 
+  const [selectedDate, setSelectedDate] = useState('2024-06-22'); 
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);  
+  const [isRefreshing, setIsRefreshing] = useState(false); 
 
   useEffect(() => {
-    fetchEvents('2024-06-01'); 
+    fetchEvents('2024-06-22'); 
   }, []);
 
   const fetchEvents = (date) => {
@@ -33,6 +35,7 @@ const Event = () => {
       .then((response) => response.json())
       .then((responseJson) => {
         setIsLoading(false);  
+        setIsRefreshing(false); 
         if (responseJson.success) {
           setEvents(responseJson.events);
         } else {
@@ -41,6 +44,7 @@ const Event = () => {
       })
       .catch((error) => {
         setIsLoading(false); 
+        setIsRefreshing(false);
         console.error(error);
       });
   };
@@ -55,6 +59,28 @@ const Event = () => {
   );
 
   const statusBarHeight = Platform.OS === 'android' ? StatusBar.currentHeight : 0;
+
+  const dateMap = {
+    'Día 1': '2024-06-22',
+    'Día 2': '2024-06-25',
+    'Día 3': '2024-06-26',
+    'Día 4': '2024-06-27',
+    'Día 5': '2024-06-28'
+  };
+
+  const formatDate = (date) => {
+    const months = [
+      'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 
+      'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'
+    ];
+    const [year, month, day] = date.split('-');
+    return `${day} DE ${months[parseInt(month, 10) - 1]}`;
+  };
+
+  const onRefresh = () => {
+    setIsRefreshing(true);
+    fetchEvents(selectedDate);
+  };
 
   return (
     <SafeAreaView style={[styles.safeArea, { paddingTop: statusBarHeight }]}>
@@ -80,9 +106,9 @@ const Event = () => {
         </TouchableOpacity>
 
         <View style={styles.dateButtons}>
-          {['2024-06-01', '2024-06-02', '2024-06-03', '2024-06-04'].map((date) => (
+          {Object.entries(dateMap).map(([day, date]) => (
             <TouchableOpacity 
-              key={date}
+              key={day}
               style={[styles.dateButton, isLoading ? styles.disabledDateButton : null]}  
               onPress={() => {
                 if (!isLoading) {  
@@ -92,13 +118,13 @@ const Event = () => {
               }}
               disabled={isLoading}  
             >
-              <Text style={styles.dateButtonText}>{`Día ${date.split('-')[2]}`}</Text>
+              <Text style={styles.dateButtonText}>{day}</Text>
             </TouchableOpacity>
           ))}
         </View>
 
         {selectedDate && (
-          <Text style={styles.selectedDateText}>Eventos del {selectedDate}</Text>
+          <Text style={styles.selectedDateText}>Eventos del {formatDate(selectedDate)}</Text>
         )}
 
         {isLoading ? (
@@ -111,6 +137,9 @@ const Event = () => {
             renderItem={renderItem}
             keyExtractor={item => item.id.toString()}
             contentContainerStyle={styles.listContent}
+            refreshControl={
+              <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+            }
           />
         )}
       </View>
