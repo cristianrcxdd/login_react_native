@@ -14,7 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const screenWidth = Dimensions.get('window').width;
 
-const Support = () => {
+const Inscription = () => {
   const navigation = useNavigation();
 
   const statusBarHeight = Platform.OS === 'android' ? StatusBar.currentHeight : 0;
@@ -26,14 +26,24 @@ const Support = () => {
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <Icon name="arrow-left" size={24} color="#FFFFFF" />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>Soporte</Text>
+          <Text style={styles.headerTitle}>Puntos de Inscripción</Text>
         </View>
         <View style={styles.content}>
-          <Text style={styles.title}>Bienvenido a la aplicación JETS UTEPSA</Text>
-          <Text style={styles.text}>En caso de presentar algún inconveniente puedes contactarte al siguiente correo:</Text>
-          <Text style={styles.email}>soporte.campusvirtual@utepsa.edu</Text>
-          <Text style={styles.text}>Santa Cruz - 2024</Text>
-          <Text style={styles.text}>CTE</Text>
+          <Text style={styles.highlightedText}>
+            Costo de tu adhesión es de 130.- bolivianos, lo que te da derecho a participar de todas las actividades, el certificado y una polera conmemorativa del evento.
+          </Text>
+          <Text style={styles.title}>Servicio de Atención Estudiantil</Text>
+          <Text style={styles.text}>
+            Servicio de Atención Estudiantil está ubicado en la planta baja del bloque Este. Sus horarios de atención son: 08:00 AM - 19:00 PM
+          </Text>
+          <Text style={styles.title}>Secretaría de tu Facultad</Text>
+          <Text style={styles.text}>
+            Las secretarías de todas las facultades se encuentran en el 2do piso del bloque Este. Con los horarios de atención de 09:00 AM a 16:00 PM
+          </Text>
+          <Text style={styles.title}>Laboratorio de Sistemas</Text>
+          <Text style={styles.text}>
+            Se encuentra en el Segundo piso del Bloque Norte. Con los horarios de atención de 08:00 AM A 13:00 PM Y DE 18:00 PM A 21:00 PM
+          </Text>
         </View>
       </View>
     </SafeAreaView>
@@ -72,23 +82,29 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 10,
     textAlign: 'center',
+    color: '#cf152d', 
   },
   text: {
     fontSize: 16,
     textAlign: 'center',
     marginVertical: 5,
   },
-  email: {
+  highlightedText: {
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
+    marginVertical: 15,
     color: '#cf152d',
-    marginVertical: 5,
+    backgroundColor: '#f2f2f2',
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#cf152d',
   },
 });
 
-export default Support;
+export default Inscription;

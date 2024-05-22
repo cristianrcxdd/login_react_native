@@ -32,7 +32,7 @@ export default function Home({ navigation }) {
             <Icon name="calendar" size={50} color="#cf152d" />
             <Text style={styles.boxText}>Eventos</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Expositores')}>
+          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Exhibitors')}>
             <Icon name="users" size={50} color="#cf152d" />
             <Text style={styles.boxText}>Expositores</Text>
           </TouchableOpacity>
@@ -42,7 +42,7 @@ export default function Home({ navigation }) {
             <Icon name="globe" size={50} color="#cf152d" />
             <Text style={styles.boxText}>Visitar Pagina Web</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('inscripciones')}>
+          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Inscription')}>
             <Icon name="map-marker" size={50} color="#cf152d" />
             <Text style={styles.boxText}>Puntos de inscripción</Text>
           </TouchableOpacity>

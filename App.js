@@ -5,6 +5,9 @@ import DrawerNavigator from './modules/DrawerNavigator';
 import Login from './page/Login';
 import Event from './page/Event';
 import Support from './page/Support'; 
+import Inscription from './page/Inscription';
+import Exhibitors from './page/Exhibitors';
+
 import { BackHandler, Alert } from 'react-native';
 
 const Stack = createStackNavigator();
@@ -61,6 +64,14 @@ export default function App() {
           name="Support" 
           component={Support}
         />
+        <Stack.Screen
+          name="Inscription"
+          component={Inscription}
+        />
+        <Stack.Screen
+          name="Exhibitors"
+          component={Exhibitors}
+        />    
       </Stack.Navigator>
     </NavigationContainer>
   );

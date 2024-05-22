@@ -26,7 +26,7 @@ const Support = () => {
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <Icon name="arrow-left" size={24} color="#FFFFFF" />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>Soporte</Text>
+          <Text style={styles.headerTitle}>Expositores</Text>
         </View>
         <View style={styles.content}>
           <Text style={styles.title}>Bienvenido a la aplicación JETS UTEPSA</Text>
