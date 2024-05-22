@@ -60,12 +60,15 @@ const Event = () => {
 
   const statusBarHeight = Platform.OS === 'android' ? StatusBar.currentHeight : 0;
 
-  const dateMap = {
+  const dateMapTop = {
     'Día 1': '2024-06-22',
     'Día 2': '2024-06-25',
     'Día 3': '2024-06-26',
+  };
+
+  const dateMapBottom = {
     'Día 4': '2024-06-27',
-    'Día 5': '2024-06-28'
+    'Día 5': '2024-06-28',
   };
 
   const formatDate = (date) => {
@@ -106,6 +109,7 @@ const Event = () => {
         </TouchableOpacity>
 
         <View style={styles.dateButtons}>
+<<<<<<< HEAD
           <View style={styles.row}>
             {['Día 1', 'Día 2', 'Día 3'].map((day) => (
               <TouchableOpacity 
@@ -141,6 +145,42 @@ const Event = () => {
             ))}
           </View>
         </View>
+=======
+  {Object.entries(dateMapTop).map(([day, date]) => (
+    <TouchableOpacity 
+      key={day}
+      style={[styles.dateButton, isLoading ? styles.disabledDateButton : null]}  
+      onPress={() => {
+        if (!isLoading) {  
+          setSelectedDate(date);
+          fetchEvents(date);
+        }
+      }}
+      disabled={isLoading}  
+    >
+      <Text style={styles.dateButtonText}>{day}</Text>
+    </TouchableOpacity>
+  ))}
+</View>
+
+<View style={styles.dateButtons}>
+  {Object.entries(dateMapBottom).map(([day, date]) => (
+    <TouchableOpacity 
+      key={day}
+      style={[styles.dateButton, isLoading ? styles.disabledDateButton : null]}  
+      onPress={() => {
+        if (!isLoading) {  
+          setSelectedDate(date);
+          fetchEvents(date);
+        }
+      }}
+      disabled={isLoading}  
+    >
+      <Text style={styles.dateButtonText}>{day}</Text>
+    </TouchableOpacity>
+  ))}
+</View>
+>>>>>>> ffefde11309e8dc209f7c17d32ac8656ec00d014
 
         {selectedDate && (
           <Text style={styles.selectedDateText}>Eventos del {formatDate(selectedDate)}</Text>
