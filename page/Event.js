@@ -109,16 +109,15 @@ const Event = () => {
         </TouchableOpacity>
 
         <View style={styles.dateButtons}>
-<<<<<<< HEAD
           <View style={styles.row}>
-            {['Día 1', 'Día 2', 'Día 3'].map((day) => (
+            {Object.entries(dateMapTop).map(([day, date]) => (
               <TouchableOpacity 
                 key={day}
                 style={[styles.dateButton, isLoading ? styles.disabledDateButton : null]}  
                 onPress={() => {
                   if (!isLoading) {  
-                    setSelectedDate(dateMap[day]);
-                    fetchEvents(dateMap[day]);
+                    setSelectedDate(date);
+                    fetchEvents(date);
                   }
                 }}
                 disabled={isLoading}  
@@ -128,14 +127,14 @@ const Event = () => {
             ))}
           </View>
           <View style={styles.row}>
-            {['Día 4', 'Día 5'].map((day) => (
+            {Object.entries(dateMapBottom).map(([day, date]) => (
               <TouchableOpacity 
                 key={day}
                 style={[styles.dateButton, isLoading ? styles.disabledDateButton : null]}  
                 onPress={() => {
                   if (!isLoading) {  
-                    setSelectedDate(dateMap[day]);
-                    fetchEvents(dateMap[day]);
+                    setSelectedDate(date);
+                    fetchEvents(date);
                   }
                 }}
                 disabled={isLoading}  
@@ -145,42 +144,6 @@ const Event = () => {
             ))}
           </View>
         </View>
-=======
-  {Object.entries(dateMapTop).map(([day, date]) => (
-    <TouchableOpacity 
-      key={day}
-      style={[styles.dateButton, isLoading ? styles.disabledDateButton : null]}  
-      onPress={() => {
-        if (!isLoading) {  
-          setSelectedDate(date);
-          fetchEvents(date);
-        }
-      }}
-      disabled={isLoading}  
-    >
-      <Text style={styles.dateButtonText}>{day}</Text>
-    </TouchableOpacity>
-  ))}
-</View>
-
-<View style={styles.dateButtons}>
-  {Object.entries(dateMapBottom).map(([day, date]) => (
-    <TouchableOpacity 
-      key={day}
-      style={[styles.dateButton, isLoading ? styles.disabledDateButton : null]}  
-      onPress={() => {
-        if (!isLoading) {  
-          setSelectedDate(date);
-          fetchEvents(date);
-        }
-      }}
-      disabled={isLoading}  
-    >
-      <Text style={styles.dateButtonText}>{day}</Text>
-    </TouchableOpacity>
-  ))}
-</View>
->>>>>>> ffefde11309e8dc209f7c17d32ac8656ec00d014
 
         {selectedDate && (
           <Text style={styles.selectedDateText}>Eventos del {formatDate(selectedDate)}</Text>
