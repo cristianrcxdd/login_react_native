@@ -51,9 +51,9 @@ const Event = () => {
 
   const renderItem = ({ item }) => (
     <View style={styles.item}>
-      <Text style={styles.title}>Hora: {item.hora}</Text>
-      <Text style={styles.text}>Descripción: {item.descripcion}</Text>
-      <Text style={styles.text}>Aula: {item.aula}</Text>
+      <Text style={styles.title}>{item.descripcion}</Text>
+      <Text style={styles.text}>Hora: {item.hora}</Text>
+      <Text style={styles.text}>Lugar: {item.aula}</Text>
       <Text style={styles.text}>Expositor: {item.expositor}</Text>
     </View>
   );
