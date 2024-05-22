@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Login() {
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -27,16 +26,24 @@ export default function Login() {
 
   const handleLogin = async () => {
     setLoading(true);
-  
+
     try {
-      const response = await axios.post('https://urbacarsrl.org/yop/backend/login.php', {
-        usuario,
-        contrasena,
+      const response = await fetch('https://urbacarsrl.org/yop/backend/login.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          usuario,
+          contrasena,
+        }),
       });
-  
-      if (response.data.success) {
+
+      const data = await response.json();
+
+      if (data.success) {
         await AsyncStorage.setItem('usuario', usuario);
-        await AsyncStorage.setItem('nombre_completo', response.data.nombre_completo);
+        await AsyncStorage.setItem('nombre_completo', data.nombre_completo);
         navigation.navigate('Drawer', { screen: 'Profile', params: { usuario } });
       } else {
         Alert.alert('Error', 'Datos incorrectos');
@@ -64,13 +71,13 @@ export default function Login() {
         onChangeText={setContrasena}
         secureTextEntry
       />
-      <TouchableOpacity 
-        style={[styles.button, loading ? styles.buttonDisabled : null]} 
-        onPress={handleLogin} 
+      <TouchableOpacity
+        style={[styles.button, loading ? styles.buttonDisabled : null]}
+        onPress={handleLogin}
         disabled={loading}
       >
         {loading ? (
-          <ActivityIndicator size="small" color="#FFFFFF" /> 
+          <ActivityIndicator size="small" color="#FFFFFF" />
         ) : (
           <Text style={styles.buttonText}>Iniciar sesión</Text>
         )}
@@ -85,7 +92,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#FFFFFF', 
+    backgroundColor: '#FFFFFF',
   },
   input: {
     width: '100%',
@@ -95,20 +102,20 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     marginBottom: 20,
     borderRadius: 5,
-    color: '#000000', 
+    color: '#000000',
   },
   button: {
-    backgroundColor: '#cf152d', 
+    backgroundColor: '#cf152d',
     padding: 15,
     borderRadius: 5,
     width: '100%',
     alignItems: 'center',
   },
   buttonDisabled: {
-    backgroundColor: '#f6a4af', 
+    backgroundColor: '#f6a4af',
   },
   buttonText: {
-    color: '#FFFFFF', 
+    color: '#FFFFFF',
     fontSize: 18,
     fontWeight: 'bold',
   },
