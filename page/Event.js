@@ -106,21 +106,40 @@ const Event = () => {
         </TouchableOpacity>
 
         <View style={styles.dateButtons}>
-          {Object.entries(dateMap).map(([day, date]) => (
-            <TouchableOpacity 
-              key={day}
-              style={[styles.dateButton, isLoading ? styles.disabledDateButton : null]}  
-              onPress={() => {
-                if (!isLoading) {  
-                  setSelectedDate(date);
-                  fetchEvents(date);
-                }
-              }}
-              disabled={isLoading}  
-            >
-              <Text style={styles.dateButtonText}>{day}</Text>
-            </TouchableOpacity>
-          ))}
+          <View style={styles.row}>
+            {['Día 1', 'Día 2', 'Día 3'].map((day) => (
+              <TouchableOpacity 
+                key={day}
+                style={[styles.dateButton, isLoading ? styles.disabledDateButton : null]}  
+                onPress={() => {
+                  if (!isLoading) {  
+                    setSelectedDate(dateMap[day]);
+                    fetchEvents(dateMap[day]);
+                  }
+                }}
+                disabled={isLoading}  
+              >
+                <Text style={styles.dateButtonText}>{day}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <View style={styles.row}>
+            {['Día 4', 'Día 5'].map((day) => (
+              <TouchableOpacity 
+                key={day}
+                style={[styles.dateButton, isLoading ? styles.disabledDateButton : null]}  
+                onPress={() => {
+                  if (!isLoading) {  
+                    setSelectedDate(dateMap[day]);
+                    fetchEvents(dateMap[day]);
+                  }
+                }}
+                disabled={isLoading}  
+              >
+                <Text style={styles.dateButtonText}>{day}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
 
         {selectedDate && (
@@ -203,15 +222,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   dateButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',  
     marginHorizontal: 20,  
     marginBottom: 20,  
   },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
   dateButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    borderRadius: 25,
+    paddingHorizontal: 10,  
+    paddingVertical: 10,  
+    borderRadius: 15,  
     backgroundColor: '#cf152d',
     flex: 1, 
     marginHorizontal: 5,  
@@ -221,7 +243,7 @@ const styles = StyleSheet.create({
   },
   dateButtonText: {
     textAlign: 'center',  
-    fontSize: 16,
+    fontSize: 14,  
     fontWeight: 'bold',
     color: '#FFFFFF',
   },
