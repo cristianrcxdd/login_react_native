@@ -34,7 +34,7 @@ export default function Home({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Exhibitors')}>
             <Icon name="users" size={50} color="#cf152d" />
-            <Text style={styles.boxText}>Expositores</Text>
+            <Text style={styles.boxText}>Conferencistas</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.row}>
