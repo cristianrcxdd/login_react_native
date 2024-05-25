@@ -20,7 +20,7 @@ const Support = () => {
   const statusBarHeight = Platform.OS === 'android' ? StatusBar.currentHeight : 0;
 
   return (
-    <SafeAreaView style={[styles.safeArea, { paddingTop: statusBarHeight + 15 }]}>
+    <SafeAreaView style={[styles.safeArea, { paddingTop: 35 }]}>
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
