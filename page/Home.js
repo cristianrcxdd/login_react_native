@@ -33,24 +33,24 @@ export default function Home({ navigation }) {
             <Text style={styles.boxText}>Eventos</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Exhibitors')}>
-            <Icon name="users" size={50} color="#cf152d" />
+            <Icon name="address-card" size={50} color="#cf152d" />
             <Text style={styles.boxText}>Conferencistas</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.row}>
+          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Inscription')}>
+            <Icon name="map-signs" size={50} color="#cf152d" />
+            <Text style={styles.boxText}>Puntos de inscripción</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Form')}>
+            <Icon name="wpforms" size={50} color="#cf152d" />
+            <Text style={styles.boxText}>Formulario de eventos</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.row}>
           <TouchableOpacity style={styles.box} onPress={openWebLink}>
             <Icon name="globe" size={50} color="#cf152d" />
-            <Text style={styles.boxText}>Visitar Pagina Web</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Inscription')}>
-            <Icon name="map-marker" size={50} color="#cf152d" />
-            <Text style={styles.boxText}>Puntos de inscripción</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.row}>
-          <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('PreguntasFrecuentes')}>
-            <Icon name="question-circle" size={50} color="#cf152d" />
-            <Text style={styles.boxText}>Preguntas Frecuentes</Text>
+            <Text style={styles.boxText}>Visitar Página Web</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.box} onPress={() => navigation.navigate('Support')}>
             <Icon name="life-ring" size={50} color="#cf152d" />
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 18,
     color: 'black',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });

@@ -8,6 +8,7 @@ import Support from './page/Support';
 import Inscription from './page/Inscription';
 import Exhibitors from './page/Exhibitors';
 
+import Form from './page/Form';
 import { BackHandler, Alert } from 'react-native';
 
 const Stack = createStackNavigator();
@@ -71,7 +72,11 @@ export default function App() {
         <Stack.Screen
           name="Exhibitors"
           component={Exhibitors}
-        />    
+        />
+        <Stack.Screen
+          name="Form"
+          component={Form}
+        />        
       </Stack.Navigator>
     </NavigationContainer>
   );

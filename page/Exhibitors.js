@@ -22,7 +22,7 @@ const Exhibitors = () => {
   const statusBarHeight = Platform.OS === 'android' ? StatusBar.currentHeight : 0;
 
   return (
-    <SafeAreaView style={[styles.safeArea, { paddingTop: 35}]}>
+    <SafeAreaView style={[styles.safeArea, { paddingTop: statusBarHeight}]}>
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
