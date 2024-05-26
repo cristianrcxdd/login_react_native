@@ -9,10 +9,11 @@ import {
   Platform, 
   StatusBar,
   ActivityIndicator,
-  ScrollView 
+  ScrollView,
+  RefreshControl // Importa RefreshControl
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const screenWidth = Dimensions.get('window').width;
@@ -21,6 +22,7 @@ const Form = () => {
   const [eventos, setEventos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [refreshing, setRefreshing] = useState(false); // Estado para controlar el refrescamiento de datos
   const navigation = useNavigation();
 
   const statusBarHeight = Platform.OS === 'android' ? StatusBar.currentHeight : 0;
@@ -36,35 +38,48 @@ const Form = () => {
     return hours + ':' + minutes + ' ' + ampm;
   };
 
-  useEffect(() => {
-    const fetchEventos = async () => {
-      try {
-        const usuario = await AsyncStorage.getItem('usuario');
-        const response = await fetch('http://192.168.0.8/estudio/backend/get_form.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ usuario }),
-        });
+  const fetchEventos = async () => {
+    try {
+      const usuario = await AsyncStorage.getItem('usuario');
+      const response = await fetch('http://192.168.0.8/estudio/backend/get_form.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ usuario }),
+      });
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (data.success) {
-          setEventos(data.eventos);
-        } else {
-          setError(data.message);
-        }
-      } catch (error) {
-        console.error('Error fetching events:', error);
-        setError('Hubo un error al obtener los eventos');
-      } finally {
-        setLoading(false);
+      if (data.success) {
+        setEventos(data.eventos);
+      } else {
+        setError(data.message);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching events:', error);
+      setError('Hubo un error al obtener los eventos');
+    } finally {
+      setLoading(false);
+      setRefreshing(false); // Detener el refrescamiento una vez finalizada la solicitud
+    }
+  };
 
-    fetchEventos();
-  }, []);
+  // Este efecto se ejecutará cada vez que la pantalla Form se enfoque
+  useFocusEffect(
+    React.useCallback(() => {
+      setLoading(true);
+      fetchEventos();
+      return () => {
+        // Limpiar el estado o realizar alguna acción al desenfocar la pantalla, si es necesario
+      };
+    }, [])
+  );
+
+  const onRefresh = () => {
+    setRefreshing(true); // Activar el refrescamiento
+    fetchEventos(); // Volver a obtener los eventos
+  };
 
   return (
     <SafeAreaView style={[styles.safeArea, { paddingTop: statusBarHeight }]}>
@@ -75,7 +90,12 @@ const Form = () => {
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Formulario de Eventos</Text>
         </View>
-        <ScrollView contentContainerStyle={styles.content}>
+        <ScrollView
+          contentContainerStyle={styles.content}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} /> // Agregar RefreshControl
+          }
+        >
           {loading ? (
             <ActivityIndicator size="large" color="#cf152d" />
           ) : error ? (
@@ -180,6 +200,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
-
 
 export default Form;
