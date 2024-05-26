@@ -14,7 +14,7 @@ const Encuesta = ({ route, navigation }) => {
     if (calificacion) {
       setLoading(true);
       try {
-        const response = await fetch('http://192.168.0.8/estudio/backend/enviar_calificacion.php', {
+        const response = await fetch('https://urbacarsrl.org/yop/backend/enviar_calificacion.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -28,12 +28,9 @@ const Encuesta = ({ route, navigation }) => {
         const data = await response.json();
 
         if (data.success) {
-          // Calificación enviada exitosamente, puedes mostrar un mensaje o realizar alguna acción adicional si es necesario
           Alert.alert('Éxito', 'Calificación enviada exitosamente');
-          // Puedes navegar de regreso a la pantalla anterior u a otra pantalla
           navigation.goBack();
         } else {
-          // Error al enviar la calificación
           Alert.alert('Error', 'Hubo un error al enviar la calificación');
         }
       } catch (error) {

@@ -22,7 +22,7 @@ const Form = () => {
   const [eventos, setEventos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [refreshing, setRefreshing] = useState(false); // Estado para controlar el refrescamiento de datos
+  const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
 
   const statusBarHeight = Platform.OS === 'android' ? StatusBar.currentHeight : 0;
@@ -41,7 +41,7 @@ const Form = () => {
   const fetchEventos = async () => {
     try {
       const usuario = await AsyncStorage.getItem('usuario');
-      const response = await fetch('http://192.168.0.8/estudio/backend/get_form.php', {
+      const response = await fetch('https://urbacarsrl.org/yop/backend/get_form.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
