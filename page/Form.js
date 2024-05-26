@@ -86,10 +86,13 @@ const Form = () => {
                 <Text style={styles.eventTitle}>{evento.descripcion}</Text>
                 <Text style={styles.eventTime}>Hora: {formatAMPM(evento.hora)}</Text>
                 {evento.status === 'Responder Encuesta' && (
-                  <TouchableOpacity style={styles.encuestaButton}>
-                    <Text style={styles.encuestaButtonText}>{evento.status}</Text>
-                  </TouchableOpacity>
-                )}
+                    <TouchableOpacity
+                        style={styles.encuestaButton}
+                        onPress={() => navigation.navigate('Encuesta', { evento })}
+                    >
+                        <Text style={styles.encuestaButtonText}>{evento.status}</Text>
+                    </TouchableOpacity>
+                    )}
                 {evento.status === 'Encuesta Enviada' && (
                   <Text style={styles.encuestaEnviada}>{evento.status}</Text>
                 )}

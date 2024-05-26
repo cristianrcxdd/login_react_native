@@ -7,7 +7,7 @@ import Event from './page/Event';
 import Support from './page/Support'; 
 import Inscription from './page/Inscription';
 import Exhibitors from './page/Exhibitors';
-
+import Encuesta from './modules/Encuesta';
 import Form from './page/Form';
 import { BackHandler, Alert } from 'react-native';
 
@@ -76,7 +76,14 @@ export default function App() {
         <Stack.Screen
           name="Form"
           component={Form}
-        />        
+        />
+        <Stack.Screen
+          name="Encuesta"
+          component={Encuesta}
+          options={{
+            title: 'Encuesta',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
