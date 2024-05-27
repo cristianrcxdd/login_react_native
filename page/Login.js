@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Login() {
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
@@ -64,13 +66,21 @@ export default function Login() {
         value={usuario}
         onChangeText={setUsuario}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Nro. de CI"
-        value={contrasena}
-        onChangeText={setContrasena}
-        secureTextEntry
-      />
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="Nro. de CI"
+          value={contrasena}
+          onChangeText={setContrasena}
+          secureTextEntry={!passwordVisible}
+        />
+        <TouchableOpacity
+          style={styles.eyeButton}
+          onPress={() => setPasswordVisible(!passwordVisible)}
+        >
+          <Icon name={passwordVisible ? 'eye' : 'eye-slash'} size={24} color="#cf152d" />
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity
         style={[styles.button, loading ? styles.buttonDisabled : null]}
         onPress={handleLogin}
@@ -103,6 +113,26 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 5,
     color: '#000000',
+  },
+  passwordContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+  },
+  passwordInput: {
+    flex: 1,
+    height: 50,
+    paddingHorizontal: 10,
+    color: '#000000',
+  },
+  eyeButton: {
+    width: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   button: {
     backgroundColor: '#cf152d',
