@@ -110,11 +110,13 @@ const styles = StyleSheet.create({
   },
   backButton: {
     marginRight: 15,
+    marginTop: 5,
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#FFFFFF',
+    marginTop: 5,
   },
   content: {
     paddingHorizontal: 20,
