@@ -10,7 +10,7 @@ import {
   StatusBar,
   ActivityIndicator,
   ScrollView,
-  RefreshControl // Importa RefreshControl
+  RefreshControl
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -61,24 +61,22 @@ const Form = () => {
       setError('Hubo un error al obtener los eventos');
     } finally {
       setLoading(false);
-      setRefreshing(false); // Detener el refrescamiento una vez finalizada la solicitud
+      setRefreshing(false);
     }
   };
 
-  // Este efecto se ejecutará cada vez que la pantalla Form se enfoque
   useFocusEffect(
     React.useCallback(() => {
       setLoading(true);
       fetchEventos();
       return () => {
-        // Limpiar el estado o realizar alguna acción al desenfocar la pantalla, si es necesario
       };
     }, [])
   );
 
   const onRefresh = () => {
-    setRefreshing(true); // Activar el refrescamiento
-    fetchEventos(); // Volver a obtener los eventos
+    setRefreshing(true); 
+    fetchEventos(); 
   };
 
   return (
@@ -93,7 +91,7 @@ const Form = () => {
         <ScrollView
           contentContainerStyle={styles.content}
           refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} /> // Agregar RefreshControl
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} /> 
           }
         >
           {loading ? (
@@ -141,7 +139,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#cf152d',
     paddingHorizontal: 20,
-    paddingBottom: 15,
+    paddingBottom: 18,
     marginBottom: 20,
   },
   backButton: {

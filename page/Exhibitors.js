@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#cf152d',
     paddingHorizontal: 20,
-    paddingBottom: 15,
+    paddingBottom: 18,
     marginBottom: 20,
   },
   backButton: {

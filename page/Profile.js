@@ -93,6 +93,7 @@ export default function Profile({ route }) {
       headerTintColor: '#FFFFFF',
       headerTitleStyle: {
         fontWeight: 'bold',
+        fontSize: 20,
       },
     });
   }, []);

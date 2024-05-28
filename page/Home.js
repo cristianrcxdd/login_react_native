@@ -11,11 +11,12 @@ export default function Home({ navigation }) {
       headerTitle: 'Inicio', 
       headerTitleAlign: 'right', 
       headerStyle: {
-        backgroundColor: '#cf152d', 
+        backgroundColor: '#cf152d',
       },
       headerTintColor: '#FFFFFF', 
       headerTitleStyle: {
-        fontWeight: 'bold', 
+        fontWeight: 'bold',
+        fontSize: 20,
       },
     });
   }, [navigation]);

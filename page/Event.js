@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#cf152d',
     paddingHorizontal: 20,
     marginBottom: 20,
-    paddingBottom: 15,
+    paddingBottom: 18,
   },
   backButton: {
     marginRight: 15,
