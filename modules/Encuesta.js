@@ -56,7 +56,7 @@ const Encuesta = ({ route, navigation }) => {
               style={[styles.boton, calificacion === valor && styles.botonSeleccionado]}
               onPress={() => handleCalificacion(valor)}
             >
-              <Text style={styles.textoBoton}>{valor}</Text>
+              <Text style={[styles.textoBoton, calificacion === valor && styles.textoBotonSeleccionado]}>{valor}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -108,6 +108,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
+  },
+  textoBotonSeleccionado: {
+    color: '#fff',
   },
 });
 
